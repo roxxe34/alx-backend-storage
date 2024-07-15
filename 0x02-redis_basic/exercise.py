@@ -9,5 +9,6 @@ class Cache:
     
     def store(self, data: Union[str, bytes, int, float]) -> str:
         key = str(uuid.uuid4())
-        self._redis.set(key, data)
+        self._redis.mset({key: data})
+        return key
 
