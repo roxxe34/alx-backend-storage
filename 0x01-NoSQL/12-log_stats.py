@@ -6,7 +6,7 @@
 from pymongo import MongoClient
 
 
-def log_stat():
+def log_stats():
     """
     list log stats
     """
@@ -31,4 +31,4 @@ def log_stat():
 
 
 if __name__ == "__main__":
-    log_stat()
+    log_stats()
