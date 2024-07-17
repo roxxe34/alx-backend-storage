@@ -12,6 +12,22 @@ import sys
 UnionTypes = Union[str, bytes, int, float]
 
 
+def replay(method: Callable):
+    """
+    Display the history of calls of a particular function.
+    """
+    key = method.__qualname__
+    inputs_key = "".join([key, ":inputs"])
+    outputs_key = "".join([key, ":outputs"])
+
+    inputs = method.__self__._redis.lrange(inputs_key, 0, -1)
+    outputs = method.__self__._redis.lrange(outputs_key, 0, -1)
+
+    print(f"{key} was called {len(inputs)} times:")
+    for input_str, output_str in zip(inputs, outputs):
+        print(f"{key}(*{input_str}) -> {output_str}")
+
+
 def count_calls(method: Callable) -> Callable:
     """
     a system to count how many
